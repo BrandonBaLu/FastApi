@@ -69,7 +69,7 @@ async def get_user(credentials: HTTPAuthorizationCredentials = Depends(securityB
         user_data = db.child("users").child(uid).get().val()
 
         response = {
-            #"user": user
+            #"user": user,
             "user_data" : user_data
         }
         return response
