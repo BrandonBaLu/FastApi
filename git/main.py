@@ -28,8 +28,8 @@ securityBearer = HTTPBearer()
 @app.get(
     "/users/token",
     status_code=status.HTTP_202_ACCEPTED,
-    summary="Get a token for a user",
-    description="Get a token for a user",
+    summary="Consigue un token para el usuario",
+    description="Consigue un token para el usuario",
     tags=["auth"],
 )
 
@@ -53,8 +53,8 @@ def get_token(credentials: HTTPBasicCredentials = Depends(securityBasic)):
 @app.get(
     "/users/",
     status_code=status.HTTP_202_ACCEPTED,
-    summary="Get a user",
-    description="Get a user",
+    summary="Consigue un usuario",
+    description="Consigue un usuario",
     tags=["auth"]
 )
 
