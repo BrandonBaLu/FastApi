@@ -93,16 +93,19 @@ async def get_user(credentials: HTTPAuthorizationCredentials = Depends(securityB
     description="Crea un usuario", 
     tags=["auth"]
 )
-
-def create_user(user: UserIN ):
+#hola
+def create_user(usuario: UserIN ):
     try:
         auth = firebase.auth()
-        user = auth.create_user_with_email_and_password(user.email, user.password)
-        response ={"message":"Usuario creado"}
+        db=firebase.database()
+        user = auth.create_user_with_email_and_password(usuario.email, usuario.password)
+        uid = user["localId"]
+        db.child("users").child(uid).set({"email": usuario.email, "level": 1 })
+        
+        response = {"Usuario Agregado", uid}
         return response
+        
 
     except Exception as error:
         print(f"Error: {error}")
-        #raise HTTPException(
-        #    status_code=status.HTTP_401_UNAUTHORIZED           
-        #)
+        
