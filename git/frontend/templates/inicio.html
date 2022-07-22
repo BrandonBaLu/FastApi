@@ -1,15 +1,39 @@
 <!DOCTYPE html>
     <html lang="es">
         <header>
-            <script>var data = sessionStorage.getItem('token');</script>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>Abarrotes BALU</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+            <link rel="stylesheet" type="text/css" href="../css/sweetalert2.min.css" media="screen"/>
+            <script type="text/javascript" src="../js/sweetalert2.all.min.js" charset="utf-8"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script>
+                var data = sessionStorage.getItem('token')
+                if(data == null){
+                    Swal.fire({
+                    title: "No has iniciado sesion",
+                    text: "dirigete a la pagina de inicio para iniciar sesion",
+                    type: "error"
+                }).then(function() {
+                    window.location = "/templates/login.html";
+                });
+                }
+                function logout(){
+                    sessionStorage.removeItem('token')
+                    window.location = "/templates/login.html";
+                }
+                console.log(data);
+                if(data != null){
+                    Swal.fire({
+                        title: "Bienvenido",
+                        text: "Has iniciado sesion correctamente",
+                        type: "success"
+                    });
+                }
+                </script>
             <style>
             body {font-family: Arial, Helvetica, sans-serif;}
     
@@ -50,7 +74,8 @@
                 <a class="active" href="/templates/get_clientes.html"><i class="fa fa-fw fa-list"></i>Listar Clientes</a> 
                 <a href="/templates/post_cliente.html"><i class="fa fa-fw fa-user"></i> Insertar</a>  
                 <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
-
+                <a href="#"><i class="fa fa-fw fa-cog"></i> Configuracion</a>
+                <a href="javascript:logout()"><i class="fa fa-fw fa-sign-out"></i> Logout</a>
             </div>
             
             <center><h1>Bienvenido a ABARROTES BALU</h1></center>
