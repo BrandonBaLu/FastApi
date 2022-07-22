@@ -17,19 +17,22 @@ function PostRegUser(){
     request.setRequestHeader("Content-Type", "application/json");
  
     request.onload = () => {
-        // Almacena la respuesta en una variable, si es 202 es que se obtuvo correctamente
-        const response = request.responseText;
-        const json = JSON.parse(response);
-        console-console.log(json);
-        sessionStorage.setItem("token", json.token);
-        Swal.fire({
-            title: json.message,
-            text: "Regresar al login ",
-            type: "success"
-        }).then(function() {
-            window.location = "/templates/login.html";
-        });
-    
+        if (request.status === 401 || request.status === 403) {
+            alert(json.detail);
+        }
+        else if (request.status == 202){
+            const response = request.responseText;
+            const json = JSON.parse(response);
+            console-console.log(json);
+            
+            Swal.fire({
+                title: json.message,
+                text: "Regresar al login ",
+                type: "success"
+            }).then(function() {
+                window.location = "/templates/login.html";
+            });
+        }  
     };
     request.send(JSON.stringify(payload));
 }
