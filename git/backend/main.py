@@ -93,8 +93,8 @@ async def get_user(credentials: HTTPAuthorizationCredentials = Depends(securityB
     description="Crea un usuario", 
     tags=["auth"]
 )
-#hola
-def create_user(usuario: UserIN ):
+
+async def create_user(usuario: UserIN ):
     try:
         auth = firebase.auth()
         db=firebase.database()
@@ -102,10 +102,8 @@ def create_user(usuario: UserIN ):
         uid = user["localId"]
         db.child("users").child(uid).set({"email": usuario.email, "level": 1 })
         
-        response = {"Usuario Agregado", uid}
+        response = {"Usuario Agregado"}
         return response
-        
-
     except Exception as error:
         print(f"Error: {error}")
         
