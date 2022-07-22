@@ -3,6 +3,7 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import pyrebase
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
@@ -11,6 +12,20 @@ app = FastAPI()
 class UserIN(BaseModel):
     email       : str
     password    : str
+
+origins = [
+    "http://0.0.0.0:8000/",
+    "http://127.0.0.1:8000/",
+    "*",   
+            
+    ]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def root():
@@ -31,7 +46,7 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 securityBasic  = HTTPBasic()
 securityBearer = HTTPBearer()
 
-@app.get(
+@app.post(
     "/users/token",
     status_code=status.HTTP_202_ACCEPTED,
     summary="Consigue un token para el usuario",
@@ -39,7 +54,7 @@ securityBearer = HTTPBearer()
     tags=["auth"],
 )
 
-def get_token(credentials: HTTPBasicCredentials = Depends(securityBasic)):
+async def post_token(credentials: HTTPBasicCredentials = Depends(securityBasic)):
     try:
         email = credentials.username
         password = credentials.password
