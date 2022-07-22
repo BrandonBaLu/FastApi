@@ -116,9 +116,8 @@ async def create_user(usuario: UserIN ):
         user = auth.create_user_with_email_and_password(usuario.email, usuario.password)
         uid = user["localId"]
         db.child("users").child(uid).set({"email": usuario.email, "level": 1 })
-        
-        response = {"Usuario Agregado"}
-        return response
+        message = {"Usuario Agregado"}
+        return message
     except Exception as error:
         print(f"Error: {error}")
         
