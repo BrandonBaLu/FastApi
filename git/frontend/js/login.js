@@ -37,7 +37,7 @@ function login(){
             sessionStorage.setItem("token", json.token);
 
             Swal.fire({
-                title: json.message,
+                title: "Ya estas logueado",
                 text: "Bienvenido",
                 type: "success"
             }).then(function() {
