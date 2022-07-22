@@ -1,10 +1,16 @@
 from fastapi import Depends, FastAPI , HTTPException, status, Security
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-
+from pydantic import BaseModel
 import pyrebase
 
+
 app = FastAPI()
+
+
+class UserIN(BaseModel):
+    email       : str
+    password    : str
 
 @app.get("/")
 def root():
@@ -79,3 +85,24 @@ async def get_user(credentials: HTTPAuthorizationCredentials = Depends(securityB
             status_code=status.HTTP_401_UNAUTHORIZED           
         )
         
+
+
+@app.post(  "/users/",  
+    status_code=status.HTTP_202_ACCEPTED, 
+    summary="Crea un usuario",
+    description="Crea un usuario", 
+    tags=["auth"]
+)
+
+def create_user(user: UserIN ):
+    try:
+        auth = firebase.auth()
+        user = auth.create_user_with_email_and_password(user.email, user.password)
+        response ={"message":"Usuario creado"}
+        return response
+
+    except Exception as error:
+        print(f"Error: {error}")
+        #raise HTTPException(
+        #    status_code=status.HTTP_401_UNAUTHORIZED           
+        #)
