@@ -9,31 +9,12 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
             <link rel="stylesheet" type="text/css" href="../css/sweetalert2.min.css" media="screen"/>
             <script type="text/javascript" src="../js/sweetalert2.all.min.js" charset="utf-8"></script>
+            <script type="text/javascript" src="../js/funciones.js" charset="utf-8"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-            <script>
-                var data = sessionStorage.getItem('token')
-                if(data == null){
-                    Swal.fire({
-                    title: "No has iniciado sesion",
-                    text: "dirigete a la pagina de inicio para iniciar sesion",
-                    type: "error"
-                }).then(function() {
-                    window.location = "/templates/login.html";
-                });
-                }
-                function logout(){
-                    sessionStorage.removeItem('token')
-                    window.location = "/templates/login.html";
-                }
-                console.log(data);
-                if(data != null){
-                    Swal.fire({
-                        title: "Bienvenido",
-                        text: "Has iniciado sesion correctamente",
-                        type: "success"
-                    });
-                }
-                </script>
+            <script type="text/javascript" src="/js/funciones.js"></script>
+            <script async>
+                document.body.onload = Authentication();
+            </script>
             <style>
             body {font-family: Arial, Helvetica, sans-serif;}
     
@@ -75,11 +56,10 @@
                 <a href="/templates/post_cliente.html"><i class="fa fa-fw fa-user"></i> Insertar</a>  
                 <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
                 <a href="#"><i class="fa fa-fw fa-cog"></i> Configuracion</a>
-                <a href="javascript:logout()"><i class="fa fa-fw fa-sign-out"></i> Logout</a>
+                <a onclick="logout()"><i class="fa fa-fw fa-sign-out"></i> Logout</a>
             </div>
             
             <center><h1>Bienvenido a ABARROTES BALU</h1></center>
             
         </body>
-    </html>
 </html>
