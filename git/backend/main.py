@@ -27,6 +27,7 @@ class ClienteIN (BaseModel):
     id: str
     nombre: str  
     email: str  
+    
 
 
 origins = [
@@ -222,7 +223,7 @@ async def post_clientes(cliente: Cliente, credentials: HTTPAuthorizationCredenti
     summary="Actualiza un usuario",
     description="Actualiza un usuario"
 )
-async def put_clientes(cliente: ClienteIN, credentials: HTTPAuthorizationCredentials = Depends(securityBearer)):
+async def put_clientes(credentials: HTTPAuthorizationCredentials = Depends(securityBearer)):
     try:     
         db=firebase.database()
         db.child("clientes").child(cliente.id).update({"Nombre": cliente.nombre, "Email": cliente.email})
@@ -236,7 +237,7 @@ async def put_clientes(cliente: ClienteIN, credentials: HTTPAuthorizationCredent
     
 #Elimina un usuario
 @app.delete(
-    "/clientes/", 
+    "/clientes/{id_cliente}", 
     response_model=Respuesta,
     status_code=status.HTTP_202_ACCEPTED,
     summary="Elimina un usuario",

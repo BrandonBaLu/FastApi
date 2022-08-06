@@ -1,13 +1,13 @@
 function DeleteCliente(){
 
-    var request = new XMLHttpRequest();
+    
     var token = sessionStorage.getItem('token');
 
     var id_cliente = window.location.search.substring(1);
     console.log("id_cliente: " + id_cliente);
     
-    
-    request.open('DELETE', "http://0.0.0.0:8000/clientes/{id}?id_cliente="+ id_cliente,true);
+    var request = new XMLHttpRequest();
+    request.open('DELETE', "http://0.0.0.0:8000/clientes/"+ id_cliente,true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("Authorization", "Bearer " + btoa(token));
     request.setRequestHeader("content-type", "application/json");
@@ -26,11 +26,8 @@ function DeleteCliente(){
         else if (request.status == 202){
 
             console.log("Response: " + response);
-            console.log("JSON: " + json);
+            //console.log("JSON: " + json);
             console.log("Status: " + status);
-
-            //alert(json.message);
-            //window.location.replace("/templates/get_clientes.html")
 
             Swal.fire({
                 title: json.message,

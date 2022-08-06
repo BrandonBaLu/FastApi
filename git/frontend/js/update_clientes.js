@@ -6,8 +6,9 @@ function PutCliente(){
     let email  = document.getElementById("email");
 
     
+    
     let payload = {
-        "id_cliente": id_cliente1,
+        "id": id_cliente1,
         "nombre": nombre.value,
         "email" : email.value,
     }
@@ -20,7 +21,7 @@ function PutCliente(){
     request.setRequestHeader("Authorization", "Bearer " + btoa(token));
     request.setRequestHeader("content-type", "application/json");
     
-    request.onload = () => {
+    /*request.onload = () => {
         
         const response  = request.responseText;
         const json      = JSON.parse(response);     
@@ -45,6 +46,6 @@ function PutCliente(){
                 window.location = "/templates/get_clientes.html";
             });
         }
-    };
+    };*/
     request.send(JSON.stringify(payload));
 }

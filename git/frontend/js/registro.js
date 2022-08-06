@@ -26,7 +26,7 @@ function PostRegUser(){
             text: "Bienvenido",
             type: "success",
         }).then(function() {
-            //window.location = "/templates/registro.html";
+            window.location = "/templates/login.html";
         });
         
         console.log(status);  
