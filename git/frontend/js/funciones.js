@@ -1,7 +1,7 @@
-var data = sessionStorage.getItem('token')
-
+const data = sessionStorage.getItem('token')
+ 
 function Authentication(){
-        
+    console.log(data);
     if(data == null){
         Swal.fire({
         title: "No has iniciado sesion",

@@ -6,15 +6,12 @@ import pyrebase
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 
-
 app = FastAPI()
 
-security = HTTPBasic() 
 
 class Respuesta (BaseModel) :  
     message: str  
-           
-           
+                
 class UserIN(BaseModel):
     email       : str
     password    : str
@@ -28,7 +25,6 @@ class ClienteIN (BaseModel):
     nombre: str  
     email: str  
     
-
 
 origins = [
     "http://0.0.0.0:8000/",
@@ -63,6 +59,7 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 securityBasic  = HTTPBasic()
 securityBearer = HTTPBearer()
 
+#Consigue el usuario autenticado en el token de autenticacion
 @app.post(
     "/users/token",
     status_code=status.HTTP_202_ACCEPTED,
@@ -77,17 +74,16 @@ async def post_token(credentials: HTTPBasicCredentials = Depends(securityBasic))
         password = credentials.password
         auth = firebase.auth()
         user = auth.sign_in_with_email_and_password(email, password)
-        #response=user
+        
         response = {
             "token": user["idToken"]
         }
         return response
     except Exception as error:
         print(f"Error: {error}")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED           
-        )
-
+        return(f"Error: {error}")
+        
+#Consigue el usuario autenticado en el token de autenticacion
 @app.get(
     "/users/",
     status_code=status.HTTP_202_ACCEPTED,
@@ -118,15 +114,13 @@ async def get_user(credentials: HTTPAuthorizationCredentials = Depends(securityB
         )
         
 
-
+#Crea un usuario en la base de datos firebase
 @app.post(  "/users/",  
     status_code=status.HTTP_202_ACCEPTED, 
     summary="Crea un usuario",
     description="Crea un usuario", 
     tags=["auth"]
 )
-
-
 async def create_user(usuario: UserIN ):
     try:
         auth = firebase.auth()

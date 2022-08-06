@@ -1,6 +1,4 @@
 function PostRegUser(){
-    var request = new XMLHttpRequest();
-
 
     let email = document.getElementById("email");
     let password  = document.getElementById("password");  
@@ -8,18 +6,15 @@ function PostRegUser(){
         "email" : email.value,
         "password" : password.value
     }
-    console.log(email.value);
-    console.log(password.value );
-    console.log(payload);
+    
 
+    var request = new XMLHttpRequest();
     request.open('POST', "http://0.0.0.0:8000/users/",true);
     request.setRequestHeader("accept", "application/json");
     request.setRequestHeader("Content-Type", "application/json");
  
     request.onload = () => {
-        //console.log(request.responseText);
         let response = request.responseText;
-        var status = request.status;
         
         Swal.fire({
             title: "Registro exitoso",
@@ -29,18 +24,15 @@ function PostRegUser(){
             window.location = "/templates/login.html";
         });
         
-        console.log(status);  
+        
         var jsonformateado = response.replace("Error: [Errno 400 Client Error: Bad Request for url: https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBoM8UTB3QctzA873CuWBDWM_y7bGoo0bk] ", "");
         const json = JSON.parse(jsonformateado);
         var obj = JSON.parse( json );
         var code = obj.error.code;
         var message = obj.error.message;
-        console.log(obj.error.code);
-        console.log(obj.error.message);
+        //console.log(obj.error.code);
+        //console.log(obj.error.message);
         
-        //if (status == 202 ){
-            
-        //}
         if (code==400 && message == "EMAIL_EXISTS"){
             Swal.fire({
                 title: "El email ya existe",

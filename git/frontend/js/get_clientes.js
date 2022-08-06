@@ -1,8 +1,9 @@
 function getClientes() {
-    var request = new XMLHttpRequest();
-    var token = sessionStorage.getItem('token')
+    
+    const token = sessionStorage.getItem('token');
     //console.log (token);
 
+    var request = new XMLHttpRequest();
     request.open('GET', "http://0.0.0.0:8000/clientes/");
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("Authorization", "Bearer " + btoa(token));

@@ -1,5 +1,6 @@
 function PutCliente(){
-    var token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
+    
     var id_cliente = window.location.search.substring(1);
     let id_cliente1 = id_cliente;
     let nombre = document.getElementById("nombre");
