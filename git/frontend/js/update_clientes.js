@@ -3,12 +3,10 @@ function PutCliente(){
     var id_cliente = window.location.search.substring(1);
     let id_cliente1 = id_cliente;
     let nombre = document.getElementById("nombre");
-    let email  = document.getElementById("email");
-
-    
+    let email  = document.getElementById("email");    
     
     let payload = {
-        "id": id_cliente1,
+        "id_cliente": id_cliente1,
         "nombre": nombre.value,
         "email" : email.value,
     }
@@ -21,7 +19,7 @@ function PutCliente(){
     request.setRequestHeader("Authorization", "Bearer " + btoa(token));
     request.setRequestHeader("content-type", "application/json");
     
-    /*request.onload = () => {
+    request.onload = () => {
         
         const response  = request.responseText;
         const json      = JSON.parse(response);     
@@ -46,6 +44,6 @@ function PutCliente(){
                 window.location = "/templates/get_clientes.html";
             });
         }
-    };*/
+    };
     request.send(JSON.stringify(payload));
 }

@@ -24,7 +24,7 @@ class Cliente (BaseModel):
     email: str  
 
 class ClienteIN (BaseModel):  
-    id: str
+    id_cliente: str
     nombre: str  
     email: str  
     
@@ -223,10 +223,10 @@ async def post_clientes(cliente: Cliente, credentials: HTTPAuthorizationCredenti
     summary="Actualiza un usuario",
     description="Actualiza un usuario"
 )
-async def put_clientes(credentials: HTTPAuthorizationCredentials = Depends(securityBearer)):
+async def put_clientes(cliente:ClienteIN, credentials: HTTPAuthorizationCredentials = Depends(securityBearer)):
     try:     
         db=firebase.database()
-        db.child("clientes").child(cliente.id).update({"Nombre": cliente.nombre, "Email": cliente.email})
+        db.child("clientes").child(cliente.id_cliente).update({"Nombre": cliente.nombre, "Email": cliente.email})
         response = {"message":"Cliente actualizado"}
         return response
     except Exception as error:
