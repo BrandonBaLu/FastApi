@@ -17,22 +17,59 @@ function PostRegUser(){
     request.setRequestHeader("Content-Type", "application/json");
  
     request.onload = () => {
-        if (request.status === 401 || request.status === 403) {
-            alert(json.detail);
-        }
-        else if (request.status == 202){
-            const response = request.responseText;
-            const json = JSON.parse(response);
-            console-console.log(json);
+        //console.log(request.responseText);
+        let response = request.responseText;
+        var status = request.status;
+        
+        Swal.fire({
+            title: "Registro exitoso",
+            text: "Bienvenido",
+            type: "success",
+        }).then(function() {
+            //window.location = "/templates/registro.html";
+        });
+        
+        console.log(status);  
+        var jsonformateado = response.replace("Error: [Errno 400 Client Error: Bad Request for url: https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBoM8UTB3QctzA873CuWBDWM_y7bGoo0bk] ", "");
+        const json = JSON.parse(jsonformateado);
+        var obj = JSON.parse( json );
+        var code = obj.error.code;
+        var message = obj.error.message;
+        console.log(obj.error.code);
+        console.log(obj.error.message);
+        
+        //if (status == 202 ){
             
+        //}
+        if (code==400 && message == "EMAIL_EXISTS"){
             Swal.fire({
-                title: json.message,
-                text: "Regresar al login ",
-                type: "success"
+                title: "El email ya existe",
+                text: "Por favor ingrese otro email",
+                type: "error"
             }).then(function() {
-                window.location = "/templates/login.html";
+                window.location = "/templates/registro.html";
             });
         }  
+        else if(code==400 && message== "INVALID_EMAIL"){                
+            Swal.fire({
+                title: "Correo invalido",
+                text: "Revisar el correo electronico",
+                type: "error"
+            }).then(function() {
+                window.location = "/templates/registro.html";
+            });
+        }
+        else if(code==400 && message == "WEAK_PASSWORD : Password should be at least 6 characters"){
+                                
+            Swal.fire({
+                title: "La contraseña debe tener al menos 6 caracteres",
+                text: "Ingresa una contraseña mas fuerte ",
+                type: "error"
+            }).then(function() {
+                window.location = "/templates/registro.html";
+            });
+        }
+
     };
     request.send(JSON.stringify(payload));
 }
